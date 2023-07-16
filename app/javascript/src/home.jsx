@@ -5,14 +5,14 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import './home.scss';
 import Layout from './layout';
 import Login from './login';
-import Feed from './feed';
+import Tweets from './tweets';
 
 const Home = props => (
   <Router>
     <Layout>
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route path="/feed" component={Feed} />
+        <Route path="/tweets" component={Tweets} />
       </Switch>
     </Layout>
   </Router>

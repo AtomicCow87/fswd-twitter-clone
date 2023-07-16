@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Feed extends React.Component {
+class Tweets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,4 +21,4 @@ class Feed extends React.Component {
   }
 }
 
-export default Feed;
+export default Tweets;
