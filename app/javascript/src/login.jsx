@@ -1,61 +1,92 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { checkStatus, json } from './utils';
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      email: '',
-      password: '',
-      errors: []
-    };
+const Login = props => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const loginSubmit = event => {
+    event.preventDefault();
+
+    fetch('/api/')
+    .then(checkStatus)
+    .then(json)
+    .then((data) => {
+      if (data.Response === 'False') {
+        throw new Error(data.Error);
+      }
+
+      if (data.Response === 'True') {
+        setUsername(data.username);
+        setEmail(data.email);
+        setPassword(data.password);
+        props.history.push('/tweets');
+      }
+    })  
+    .catch((error) => {
+      console.log(error.message);
+    });
   }
 
-  render() {
+  const signupSubmit = event => {
+    event.preventDefault();
 
-    return (
-      <React.Fragment>
-        <div className="row">
-          <div className="col-xs-6 welcome">
-            <div id="welcome-text">
-              <h1><strong>Welcome to Twitter.</strong></h1>
-              <p>Connect with your friends &#8212; and other fascinating people. Get in-the-moment updates on the things that interest you. And watch events unfold, in real time, from every angle.</p>
+    fetch('/api/')
+    .then(checkStatus)
+    .then(json)
+    .then((data) => {
+      if (data.Response === 'False') {
+        throw new Error(data.Error);
+      }
+
+      if (data.Response === 'True') {
+        setUsername(data.username);
+        setEmail(data.email);
+        setPassword(data.password);
+        props.history.push('/tweets');
+      }
+    })  
+    .catch((error) => {
+      console.log(error.message);
+    });
+  }
+
+  return (
+    <React.Fragment>
+      <div className="row">
+        <div className="col">
+          <h1>Welcome to Twitter</h1>
+          <p>Connect with your friends — and other fascinating people. Get in-the-moment updates on the things that interest you. And watch events unfold, in real time, from every angle.</p>
+        </div>
+        <div className="col">
+          <h2>Log in</h2>
+          <form onSubmit={loginSubmit} className="log-in-form">
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <input type="text" name="username" id="username" className="form-control" />
+              <label htmlFor="password">Password</label>
+              <input type="password" name="password" id="password" className="form-control" />
             </div>
-          </div>
+            <button type="submit" className="btn btn-primary log-in-button">Login</button>
+          </form>
+          <h2>Sign up</h2>
+          <form onSubmit={signupSubmit} className="sign-up-form">
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <input type="text" name="username" id="username" className="form-control" />
+              <label htmlFor="email">Email</label>
+              <input type="email" name="email" id="email" className="form-control" />
+              <label htmlFor="password">Password</label>
+              <input type="password" name="password" id="password" className="form-control" />
+            </div>
+            <button type="submit" className="btn btn-warning sign-up-button">Sign Up</button>
+          </form>
         </div>
-        <div className="row">
-          <div className="log-in col-xs-4 col-xs-offset-1">
-            <form>
-              <div className="form-group">
-                <input type="text" className="form-control username" placeholder="Username" />
-              </div>
-              <div className="form-group col-xs-8">
-                <input type="password" className="form-control password" placeholder="Password" />
-              </div>
-              <button id="log-in-btn" className="btn btn-default btn-primary col-xs-3 col-xs-offset-1">Log in</button>
-            </form>
-          </div>
-          <div className="sign-up col-xs-4 col-xs-offset-1">
-            <form>
-              <div className="new-to-t">
-                <p><strong>New to Twitter?</strong><span> Sign Up</span></p>
-              </div>
-              <div className="form-group">
-                <input type="text" className="form-control username" placeholder="Username" />
-              </div>
-              <div className="form-group">
-                <input type="email" className="form-control email" placeholder="Email" />
-              </div>
-              <div className="form-group">
-                <input type="password" className="form-control password" placeholder="Password" />
-              </div>
-              <button id="sign-up-btn" className="btn btn-default btn-warning pull-right">Sign up for Twitter</button>
-            </form>
-          </div>
-        </div>
-      </React.Fragment>
-    )
-  }
+      </div>
+    </React.Fragment>
+  )
 }
+
 
 export default Login;
