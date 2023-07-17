@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { checkStatus, json } from './utils';
 
 const Login = props => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const loginSubmit = event => {
     event.preventDefault();
@@ -19,9 +16,7 @@ const Login = props => {
 
       if (data.Response === 'True') {
         setUsername(data.username);
-        setEmail(data.email);
-        setPassword(data.password);
-        props.history.push('/tweets');
+        props.history.push(`/user/${data.username}`);
       }
     })  
     .catch((error) => {
@@ -41,10 +36,7 @@ const Login = props => {
       }
 
       if (data.Response === 'True') {
-        setUsername(data.username);
-        setEmail(data.email);
-        setPassword(data.password);
-        props.history.push('/tweets');
+        props.history.push(`/user/${data.username}`);
       }
     })  
     .catch((error) => {

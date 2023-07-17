@@ -12,7 +12,7 @@ const Home = props => (
     <Layout>
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route path="/tweets" component={Tweets} />
+        <Route path="/user/:username" component={Tweets} />
       </Switch>
     </Layout>
   </Router>
