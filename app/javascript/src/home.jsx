@@ -4,16 +4,12 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import './home.scss';
 import Layout from './layout';
-import Login from './login';
-import Tweets from './tweets';
+
 
 const Home = props => (
   <Router>
     <Layout>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route path="/user/:username" component={Tweets} />
-      </Switch>
+      <h1>Test</h1>
     </Layout>
   </Router>
 )

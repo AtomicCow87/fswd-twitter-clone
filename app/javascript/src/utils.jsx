@@ -7,3 +7,4 @@ export const checkStatus = (response) => {
 }
 
 export const json = (response) => response.json()
+
