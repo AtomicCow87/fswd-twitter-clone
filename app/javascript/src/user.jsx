@@ -9,7 +9,28 @@ const User = props => {
 
   const [tweets, setTweets] = useState([]);
   const [error, setError] = useState(null);
+
+  componentDidMount = () => {
+    fetchTweets();
+  }
   
+  fetchTweets = () => {
+    fetch('/api/tweets/')
+    .then(checkStatus)
+    .then(json)
+    .then((data) => {
+      if (data.Response === 'False') {
+        throw new Error(data.Error);
+      }
+
+      if (data.Response === 'True') {
+        setTweets(data.tweets);
+      }
+    })
+    .catch((error) => {
+      setError(error.message);
+    });
+  }
 
   return (
     <React.Fragment>
@@ -23,7 +44,10 @@ const User = props => {
               return error;
             }
             return tweets.map((tweet) => {
-              return <Tweets key={tweet.id} tweet={tweet} />;
+              return <div key={tweet.id}>
+                      <Link to='/users/:{tweet.username}/tweets'>{tweet.username}</Link>
+                      <p>{tweet.tweet}</p>;
+                    </div>
             });
           })()}
         </div>

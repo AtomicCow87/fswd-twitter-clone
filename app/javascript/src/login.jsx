@@ -6,28 +6,41 @@ const Login = props => {
   const loginSubmit = event => {
     event.preventDefault();
 
-    fetch('/api/')
+    fetch('/api/authenticated')
     .then(checkStatus)
     .then(json)
     .then((data) => {
       if (data.Response === 'False') {
         throw new Error(data.Error);
-      }
-
-      if (data.Response === 'True') {
-        setUsername(data.username);
-        props.history.push(`/user/${data.username}`);
       }
     })  
     .catch((error) => {
       console.log(error.message);
     });
+
+    newSession();
   }
 
   const signupSubmit = event => {
     event.preventDefault();
 
-    fetch('/api/')
+    fetch('/api/users')
+    .then(checkStatus)
+    .then(json)
+    .then((data) => {
+      if (data.Response === 'False') {
+        throw new Error(data.Error);
+      }
+    })  
+    .catch((error) => {
+      console.log(error.message);
+    });
+
+    newSession();
+  }
+
+  newSession = () => {
+    fetch('/api/sessions')
     .then(checkStatus)
     .then(json)
     .then((data) => {
@@ -36,9 +49,9 @@ const Login = props => {
       }
 
       if (data.Response === 'True') {
-        props.history.push(`/user/${data.username}`);
+        props.history.push(`/users/${data.username}`);
       }
-    })  
+    })
     .catch((error) => {
       console.log(error.message);
     });
