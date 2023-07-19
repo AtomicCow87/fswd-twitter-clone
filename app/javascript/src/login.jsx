@@ -1,67 +1,47 @@
-/* import React, { useState } from 'react';
-import { checkStatus, json } from './utils';
+import React, { useState } from 'react';
+import { createUser, signInUser, authenticateUser } from './utils';
+
 
 const Login = props => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const loginSubmit = event => {
-    event.preventDefault();
-
-    fetch('/api/authenticated')
-    .then(checkStatus)
-    .then(json)
-    .then((data) => {
-      if (data.Response === 'False') {
-        throw new Error(data.Error);
+  const loginSubmit = (e) => {
+  e.preventDefault();
+  setUsername(e.target.querySelector('.username').value);
+  setPassword(e.target.querySelector('.password').value);
+  signInUser(username, password)
+    .then(data => {
+      if (data.jwt) {
+        localStorage.setItem('jwt', data.jwt);
+        authenticateUser()
+          .then(data => {
+            if (data.username) {
+              props.history.push(`/user/${data.username}`);
+            }
+          })
       }
-    })  
-    .catch((error) => {
-      console.log(error.message);
-    });
-
-    newSession();
+    })
   }
 
-  const signupSubmit = event => {
-    event.preventDefault();
-
-    fetch('/api/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: document.getElementById('username').value,
-          email: document.getElementById('email').value,
-          password: document.getElementById('password').value
-        })
-    })
-    .then(checkStatus)
-    .then(json)
-    .then((data) => {
-      if (data.Response === 'False') {
-        throw new Error(data.Error);
-      }
-    })
-
-    newSession();
-  }
-
-  newSession = () => {
-    fetch('/api/sessions')
-    .then(checkStatus)
-    .then(json)
-    .then((data) => {
-      if (data.Response === 'False') {
-        throw new Error(data.Error);
-      }
-
-      if (data.Response === 'True') {
-        props.history.push(`/users/${data.username}`);
-      }
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
+  const signUpSubmit = (e) => {
+    e.preventDefault();
+    setUsername(e.target.querySelector('.username').value);
+    setEmail(e.target.querySelector('.email').value);
+    setPassword(e.target.querySelector('.password').value);
+    createUser(username, email, password)
+      .then(data => {
+        if (data.jwt) {
+          localStorage.setItem('jwt', data.jwt);
+          authenticateUser()
+            .then(data => {
+              if (data.username) {
+                props.history.push(`/user/${data.username}`);
+              }
+            })
+        }
+      })
   }
 
   return (
@@ -83,7 +63,7 @@ const Login = props => {
             <button type="submit" className="btn btn-primary log-in-button">Login</button>
           </form>
           <h2>Sign up</h2>
-          <form onSubmit={signupSubmit} className="sign-up-form">
+          <form onSubmit={signUpSubmit} className="sign-up-form">
             <div className="form-group">
               <label htmlFor="username">Username</label>
               <input type="text" name="username" id="username" className="form-control" />
@@ -101,4 +81,4 @@ const Login = props => {
 }
 
 
-export default Login; */
+export default Login;

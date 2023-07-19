@@ -1,60 +1,112 @@
-/* import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { checkStatus, json } from './utils';
-import Tweets from './tweets';
+import Layout from './layout';
+import { getTweets, getOneTweet, getUserTweets, deleteTweet, searchTweets, logoutUser } from './utils';
 
 const User = props => {
   const location = useLocation();
-  const username = location.pathname.split('/')[2];
-
+  const [username, setUsername] = useState(location.pathname.split('/')[2]);
   const [tweets, setTweets] = useState([]);
-  const [error, setError] = useState(null);
+  const [search, setSearch] = useState('');
 
-  componentDidMount = () => {
-    fetchTweets();
+  const getTweets = () => {
+    getUserTweets(username)
+      .then(data => {
+        setTweets(data);
+      })
   }
-  
-  fetchTweets = () => {
-    fetch('/api/tweets/')
-    .then(checkStatus)
-    .then(json)
-    .then((data) => {
-      if (data.Response === 'False') {
-        throw new Error(data.Error);
-      }
 
-      if (data.Response === 'True') {
-        setTweets(data.tweets);
-      }
-    })
-    .catch((error) => {
-      setError(error.message);
-    });
+  const deleteOneTweet = (id) => {
+    deleteTweet(id)
+      .then(data => {
+        getTweets();
+      })
   }
+
+  const searchTweets = (e) => {
+    e.preventDefault();
+    searchTweets(search)
+      .then(data => {
+        setTweets(data);
+      })
+  }
+
+  const logout = () => {
+    logoutUser()
+      .then(data => {
+        localStorage.removeItem('jwt');
+        props.history.push('/');
+      })
+  }
+
+  const getOneTweet = (id) => {
+    getOneTweet(id)
+      .then(data => {
+        setTweets([data]);
+      })
+  }
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  }
+
 
   return (
-    <React.Fragment>
-      <div className="row">
-        <div className="col">
-          <h3>${username}'s Feed</h3>
-        </div>
-        <div className="col">
-          {(() => {
-            if (error) {
-              return error;
-            }
-            return tweets.map((tweet) => {
-              return <div key={tweet.id}>
-                      <Link to='/users/:{tweet.username}/tweets'>{tweet.username}</Link>
-                      <p>{tweet.tweet}</p>;
-                    </div>
-            });
-          })()}
-        </div>
-        <div className="col">
-          <h3>Who to follow</h3>
+      <div className="main container mt-5">
+        <div className="row">          
+          <div className="user-field col">
+            <a className="username" href="#">@{username}</a><br/>
+            <div className="col-xs-3">
+              <a href="">
+                <span>Tweets<br/></span>
+                <span className="user-stats-tweets">10</span>
+              </a>
+            </div>
+            <div className="col-xs-4">
+              <a href="">
+                <span>Following<br/></span>
+                <span className="user-stats-following">0</span>
+              </a>
+            </div>
+            <div className="col-xs-4">
+              <a href="">
+                <span>Followers<br/></span>
+                <span className="user-stats-followers">0</span>
+              </a>
+            </div>
+          </div>
+          <div className="col feed-box">
+            <div className="col-xs-12 post-tweet-box">
+              <textarea type="text" className="form-control post-input" rows="3" placeholder="What's happening?"></textarea>
+              <div className="pull-right">
+                <button className="btn btn-primary" disabled id="post-tweet-btn">Tweet</button>
+              </div>
+            </div>
+            <div className="feed">             
+            </div>
+          </div>
+          <div className="trends col">
+            <div className="col-xs-12">
+              <form onSubmit={searchTweets}>
+                <input type="text" className="form-control" placeholder="Search Twitter" onChange={handleChange} />
+              </form>
+              <div className="trends-header">
+                <span>Trends</span><span> &#183; </span><small><a href="">Change</a></small>
+              </div>
+              <ul className="trends-list">
+                <li><a href="#">#React</a></li>
+                <li><a href="#">#Ruby</a></li>
+                <li><a href="#">#foobarbaz</a></li>
+                <li><a href="#">#rails</a></li>
+                <li><a href="#">#API</a></li>
+              </ul>
+            </div>
+          </div>          
+          <div className="col follow-suggest">
+          </div>
         </div>
       </div>
-    </React.Fragment>
   )
-} */
+}
+
+export default User;
