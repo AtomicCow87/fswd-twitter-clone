@@ -24,17 +24,24 @@ const Login = props => {
   const signupSubmit = event => {
     event.preventDefault();
 
-    fetch('/api/users')
+    fetch('/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: document.getElementById('username').value,
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value
+        })
+    })
     .then(checkStatus)
     .then(json)
     .then((data) => {
       if (data.Response === 'False') {
         throw new Error(data.Error);
       }
-    })  
-    .catch((error) => {
-      console.log(error.message);
-    });
+    })
 
     newSession();
   }
