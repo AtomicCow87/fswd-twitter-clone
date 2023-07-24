@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import './home.scss';
 import Layout from './layout';
-import Login from './login';
-import User from './user';
 
 const Home = props => {
   return (
