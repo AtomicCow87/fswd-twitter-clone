@@ -1,16 +1,29 @@
+// layout.js
 import React from 'react';
 
 const Layout = (props) => {
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand navbar-light bg-light">
-        <div className="container">
-          <a className="navbar-brand" href="#">Twitter</a>
+        <div className="container-fluid">
+          <a className="navbar-brand text-primary" href="/">Twitter</a>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto">
+              <li className="nav-item">
+                <a className="nav-link" href="/">Home</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
-      <div className="container py-3">
+      <body className="container">
         {props.children}
-      </div>
+      </body>
+      <footer className="p-3 bg-light">
+        <div>
+          <p className="me-3 mb-0 text-secondary">Twitter Clone</p>
+        </div>
+      </footer>
     </React.Fragment>
   );
 }
