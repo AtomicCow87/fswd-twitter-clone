@@ -1,32 +1,19 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { handleErrors, safeCredentials } from './utils/fetchHelper';
+// property.jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Layout from '@src/layout';
+import { handleErrors } from '@utils/fetchHelper';
 
-import './home.scss';
-import Layout from './layout';
+import './users.scss';
 
-class Home extends React.Component {
+class Users extends React.Component {
   state = {
     tweets: [],
     loading: true,
-    authenticated: false,
-    error: '',
   }
 
   componentDidMount() {
-    fetch('/api/authenticated')
-      .then(handleErrors)
-      .then(data => {
-        this.setState({
-          authenticated: data.authenticated,
-        })
-      })
-
-    this.getTweets();
-  }
-
-  getTweets = () => {
-    fetch('/api/tweets')
+    fetch(`/users/${user_id}/tweets`)
       .then(handleErrors)
       .then(data => {
         this.setState({
@@ -36,33 +23,11 @@ class Home extends React.Component {
       })
   }
 
-  logoutUser = (e) => {
-    if (e) { e.preventDefault(); }
-    this.setState({
-      error: '',
-    });
-
-    fetch('/api/session', safeCredentials({
-      method: 'DELETE',
-    }))
-      .then(handleErrors)
-      .then(data => {
-        if (data.success) {
-          this.setState({
-            authenticated: false,
-          });
-        }
-      })
-      .catch(error => {
-        this.setState({
-          error: 'Could not log out.',
-        })
-      })
-  }
-
-
-  render() {
-    const { tweets, loading, authenticated } = this.state;
+  render () {
+    const { tweets, loading } = this.state;
+    if (loading) {
+      return <p>loading...</p>;
+    };
 
     return (
       <Layout>
@@ -106,9 +71,4 @@ class Home extends React.Component {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Home />,
-    document.body.appendChild(document.createElement('div')),
-  )
-})
+export default Users;

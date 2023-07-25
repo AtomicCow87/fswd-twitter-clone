@@ -6,4 +6,9 @@ class StaticPagesController < ApplicationController
   def login
     render 'login'
   end
+
+  def users
+    @users = { user_id: params[:username] }.to_json
+    render 'users'
+  end
 end

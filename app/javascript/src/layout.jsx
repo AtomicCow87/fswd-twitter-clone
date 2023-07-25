@@ -16,9 +16,7 @@ const Layout = (props) => {
           </div>
         </div>
       </nav>
-      <body className="container">
-        {props.children}
-      </body>
+      {props.children}
       <footer className="p-3 bg-light">
         <div>
           <p className="me-3 mb-0 text-secondary">Twitter Clone</p>
