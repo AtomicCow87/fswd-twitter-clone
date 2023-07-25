@@ -29,6 +29,8 @@ gem 'jbuilder', '~> 2.11'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1'
 
+gem 'rails_admin', '~> 2.0'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 # AWS S3
