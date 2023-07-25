@@ -35,8 +35,8 @@ class LoginWidget extends React.Component {
       .then(data => {
         if (data.success) {
           const params = new URLSearchParams(window.location.search);
-          const redirect_url = 'localhost:3000/';
-          window.location = redirect_url;
+          const redirect_url = params.get('redirect_url') || '/';
+          window.location.replace(redirect_url);
         }
       })
       .catch(error => {
