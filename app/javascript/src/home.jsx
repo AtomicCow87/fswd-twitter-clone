@@ -42,7 +42,7 @@ class Home extends React.Component {
       error: '',
     });
 
-    fetch('/api/session', safeCredentials({
+    fetch('/api/sessions', safeCredentials({
       method: 'DELETE',
     }))
       .then(handleErrors)
@@ -60,6 +60,33 @@ class Home extends React.Component {
       })
   }
 
+  postTweet = (e) => {
+    if (e) { e.preventDefault(); }
+    this.setState({
+      error: '',
+    });
+
+    const body = document.querySelector('#new-tweet').value;
+
+    fetch('/api/tweets', safeCredentials({
+      method: 'POST',
+      body: JSON.stringify({
+        tweet: {
+          message: body,
+        }
+      })
+    }))
+      .then(handleErrors)
+      .then(data => {
+        document.querySelector('#new-tweet').value = '';
+        this.getTweets();
+      })
+      .catch(error => {
+        this.setState({
+          error: 'Could not post tweet.',
+        })
+      })
+  }
 
   render() {
     const { tweets, loading, authenticated } = this.state;
@@ -69,14 +96,24 @@ class Home extends React.Component {
         <div className="row">
           <div className="col">
             <div className="d-grid col-6 mx-auto">
-              {authenticated && <a href="/" className="btn btn-primary" onClick={logoutUser}>Log out</a>}
+              {authenticated && <a href="/" className="btn btn-primary rounded-pill mb-3" onClick={this.logoutUser}>Log out</a>}
               {!authenticated && <a href="/login" className="btn btn-primary rounded-pill mb-3">Log in or Sign up</a>}
             </div>
           </div>
           <div className="home col mx-5">
-            {loading && <div className="spinner-border text-primary" role="status">loading...</div>}
+            {loading && <div className="spinner-border text-primary" role="status"></div>}
             {(loading === false && authenticated === false) && 
               <div className="alert alert-info" role="alert">Please log in to post a tweet</div>
+            }
+            {(loading === false && authenticated === true) &&
+              <div className="mb-3">
+                <form onSubmit={this.postTweet}>
+                  <div className="form-group">
+                    <textarea className="form-control" id="new-tweet" rows="2" placeholder="What's happening?"></textarea>
+                  </div>
+                  <button type="submit" className="btn btn-primary rounded-pill mb-3">Tweet</button>
+                </form>
+              </div>
             }
             <div className="tweets">
               <p>middle</p>
