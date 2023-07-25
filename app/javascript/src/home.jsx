@@ -34,7 +34,7 @@ class Home extends React.Component {
           loading: false,
         })
       })
-  }
+  } 
 
   logoutUser = (e) => {
     if (e) { e.preventDefault(); }
@@ -116,17 +116,13 @@ class Home extends React.Component {
               </div>
             }
             <div className="tweets">
-              <p>middle</p>
               {tweets.map(tweet => (
                 <div className="tweet" key={tweet.id}>
                   <div className="author">
-                    <a href={`/users/${tweet.user.username}`}>{tweet.user.username}</a>
+                    <a href={`/users/${tweet.username}`}>{tweet.username}</a>
                   </div>
-                  <div className="body">
-                    <div>{tweet.body}</div>
-                    <div className="date">
-                      {new Date(tweet.created_at).toLocaleString()}
-                    </div>
+                  <div className="message">
+                    <div>{tweet.message}</div>
                   </div>
                 </div>
               ))}
