@@ -6,7 +6,7 @@ const Layout = (props) => {
     <React.Fragment>
       <nav className="navbar navbar-expand navbar-light bg-light">
         <div className="container-fluid">
-          <a className="navbar-brand text-primary" href="/">Twitter</a>
+          <a className="navbar-brand text-info" href="/">Twitter</a>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
