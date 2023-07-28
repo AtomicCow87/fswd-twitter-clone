@@ -27,11 +27,10 @@ class Users extends React.Component {
     })
 
     this.getUserTweets();
-    this.userStatus();
   }
 
   getUserTweets = () => {
-    let username = window.location.pathname.split('/')[2];
+    let username = window.location.pathname.replace('/users/', '');
 
     fetch('/api/users/' + username + '/tweets')
       .then(handleErrors)
@@ -41,6 +40,8 @@ class Users extends React.Component {
           loading: false,
         })
       })
+    
+    this.userStatus();
   }
 
   logoutUser = (e) => {
@@ -110,7 +111,7 @@ class Users extends React.Component {
   }
 
   userStatus = () => {
-    let username = window.location.pathname.split('/')[2];
+    let username = window.location.pathname.replace('/users/', '');
 
     if (username === this.state.currentUser) {
       this.setState({
