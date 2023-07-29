@@ -11,6 +11,7 @@ class Home extends React.Component {
     loading: true,
     authenticated: false,
     error: '',
+    username: '',
   }
 
   componentDidMount() {
@@ -19,6 +20,7 @@ class Home extends React.Component {
       .then(data => {
         this.setState({
           authenticated: data.authenticated,
+          username: data.username,
         })
       })
 
@@ -37,7 +39,7 @@ class Home extends React.Component {
   } 
 
   logoutUser = (e) => {
-    if (e) { e.preventDefault(); }
+
     this.setState({
       error: '',
     });
@@ -89,15 +91,24 @@ class Home extends React.Component {
   }
 
   render() {
-    const { tweets, loading, authenticated } = this.state;
+    const { tweets, loading, authenticated, username } = this.state;
 
     return (
       <Layout>
         <div className="row">
           <div className="col">
+            {authenticated &&
             <div className="d-grid col-6 mx-auto">
-              {authenticated && <a href="/" className="btn btn-primary rounded-pill mb-3" onClick={this.logoutUser}>Log out</a>}
-              {!authenticated && <a href="/login" className="btn btn-primary rounded-pill mb-3">Log in or Sign up</a>}
+               <a href={`/users/${username}`} className="btn btn-primary rounded-pill mb-3">Profile</a>              
+            </div>}
+            {!authenticated && 
+            <div className="d-grid col-6 mx-auto">
+              <h1 className="mt-3 mb-5 text-center">Welcome to Twitter!</h1>
+              <p>Connect with your friends &#8212; and other fascinating people. Get in-the-moment updates on the things that interest you. And watch events unfold, in real time, from every angle.</p>
+            </div>}
+            <div className="d-grid col-6 mx-auto">
+              {authenticated && <a href={`${window.location.pathname}`} className="btn btn-primary rounded-pill mb-3" onClick={this.logoutUser}>Log out</a>}
+              {!authenticated && <a href={`/login?redirect_url=${window.location.pathname}`} className="btn btn-primary rounded-pill mb-3">Log in or Sign up</a>}
             </div>
           </div>
           <div className="home col mx-5">
@@ -117,20 +128,56 @@ class Home extends React.Component {
             }
             <div className="tweets">
               {tweets.map(tweet => (
-                <div className="tweet" key={tweet.id}>
-                  <div className="author">
-                    <a href={`/users/${tweet.username}`}>{tweet.username}</a>
+                <div className="tweet border-bottom border-1 pb-3 mb-3" key={tweet.id}>
+                  <div className="author mb-2">
+                    <a href={`/users/${tweet.username}`}>@{tweet.username}</a>
                   </div>
-                  <div className="message">
+                  <div className="message mb-2">
                     <div>{tweet.message}</div>
                   </div>
+                  {tweet.username === username &&
+                  <div className="delete mb-2 justified-right">
+                    <button className="btn btn-danger btn-sm rounded-pill" onClick={this.deleteTweet}>Delete</button>
+                  </div>}
                 </div>
               ))}
             </div>
           </div>
           <div className="col mx-5">
             <div className="mb-3">
-              <h1>right side</h1>
+              <h3>What's Happening</h3>
+              <ul>
+                <li>
+                  <a href="#">#React</a>
+                </li>
+                <li>
+                <a href="#">#RubyOnRails</a>
+                </li>
+                <li>
+                <a href="#">#JavaScript</a>
+                </li>
+                <li>
+                <a href="#">#FullStack</a>
+                </li>
+                <li>
+                <a href="#">#WebDevelopment</a>
+                </li>
+                <li>
+                <a href="#">#Coding</a>
+                </li>
+                <li>
+                <a href="#">#MyFingersHurt</a>
+                </li>
+              </ul>
+              <h3>Who to follow</h3>
+              <ul>
+                <li>
+                  <a href="#">@ByYourLogic</a>
+                </li>
+                <li>
+                  <a href="#">@dril</a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
