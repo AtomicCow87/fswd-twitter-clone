@@ -66,7 +66,7 @@ class Users extends React.Component {
   }
 
   postTweet = (e) => {
-    if (e) { e.preventDefault(); }
+    
     this.setState({
       error: '',
     });
