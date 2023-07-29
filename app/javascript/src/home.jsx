@@ -63,7 +63,7 @@ class Home extends React.Component {
   }
 
   postTweet = (e) => {
-    if (e) { e.preventDefault(); }
+    
     this.setState({
       error: '',
     });
