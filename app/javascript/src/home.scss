@@ -1,0 +1,72 @@
+.tweet {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+.author {
+  font-weight: bold;
+}
+
+.user {
+  text-decoration: none;
+  color: blue($color: #000000);
+  font-size: larger;
+}
+
+.message {
+  margin-top: 10px;
+  font-size: large;
+}
+
+.delete {
+  margin-top: -10px;
+  color: #999;
+  cursor: pointer;
+}
+
+.trend-box {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+.follow-box {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+.right-side {
+  margin-left: 20px;
+  margin-bottom: 5px;
+  text-decoration: none;
+  color: blue($color: #000000);
+}
+
+.right-side-hashes {
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+.right-side-follow {
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+.left-side {
+  margin-bottom: 5px;
+  text-decoration: none;
+  color: blue($color: #000000);
+  font-size: larger;
+  font-variant: small-caps;
+}

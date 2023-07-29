@@ -121,8 +121,8 @@ class Home extends React.Component {
         <div className="row">
           <div className="col">
             {authenticated &&
-            <div className="d-grid col-6 mx-auto">
-              <h1 className="mt-3 mb-5 left-side">Hello @{username}!</h1>
+            <div className="d-grid col-6 mx-auto left-box">
+              <h1 className="mt-3 mb-5 left-side-title">Hello @{username}!</h1>
               <a href={`/users/${username}`} className="mb-3 left-side">Profile</a>
               <a href="#" className=" mb-3 left-side">Edit Profile</a>
               <a href="#" className=" mb-3 left-side">Followers</a>
@@ -153,11 +153,11 @@ class Home extends React.Component {
                 </form>
               </div>
             }
-            <div className="tweets">
+            <div className="tweets mt-3">
               {tweets.map(tweet => (
-                <div className="tweet shadow pb-3 mb-3" key={tweet.id}>
+                <div className="tweet pb-3 mb-3" key={tweet.id} id={tweet.id}>
                   <div className="author mb-2">
-                    <a href={`/users/${tweet.username}`}>@{tweet.username}</a>
+                    <a href={`/users/${tweet.username}`} className="user">@{tweet.username}</a>
                   </div>
                   <div className="message mb-2">
                     <div>{tweet.message}</div>
@@ -171,7 +171,7 @@ class Home extends React.Component {
             </div>
           </div>
           <div className="col m-5">
-            <div className="mb-3">
+            <div className="mb-3 trend-box">
               <h3 className="right-side-hashes">What's Happening</h3>
               <ul>
                 <li>
@@ -196,6 +196,8 @@ class Home extends React.Component {
                   <a href="#" className="right-side">#MyFingersHurt</a>
                 </li>
               </ul>
+            </div>
+            <div className="mb-3 follow-box">
               <h3 className="right-side-follow">Who to follow</h3>
               <ul>
                 <li>

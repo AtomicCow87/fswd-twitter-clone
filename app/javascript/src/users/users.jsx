@@ -147,14 +147,14 @@ class Users extends React.Component {
               <div className="mb-3">
                 <form onSubmit={this.postTweet}>
                   <div className="form-group mt-5 mb-2">
-                    <textarea className="form-control" id="new-tweet" rows="2" placeholder={`Got something to say @${username}?`}></textarea>
+                    <textarea className="form-control" id="new-tweet" rows="1" placeholder={`Got something to say @${username}?`}></textarea>
                   </div>
                   <button type="submit" className="btn btn-primary rounded-pill mb-3">Tweet</button>
                 </form>
               </div>
             }
             </div>}
-            <div className="tweets">
+            <div className="tweets mt-5">
               {tweets.map(tweet => (
                 <div className="tweet pb-3 mb-3" key={tweet.id} id={tweet.id}>
                   <div className="author mb-2">
@@ -171,8 +171,8 @@ class Users extends React.Component {
               ))}
             </div>
           </div>
-          <div className="col mx-5">
-          <div className="mb-3">
+          <div className="col m-5">
+            <div className="mb-3 trend-box">
               <h3 className="right-side-hashes">What's Happening</h3>
               <ul>
                 <li>
@@ -197,6 +197,8 @@ class Users extends React.Component {
                   <a href="#" className="right-side">#MyFingersHurt</a>
                 </li>
               </ul>
+            </div>
+            <div className="mb-3 follow-box">
               <h3 className="right-side-follow">Who to follow</h3>
               <ul>
                 <li>
