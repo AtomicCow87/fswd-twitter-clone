@@ -158,7 +158,7 @@ class Users extends React.Component {
               {tweets.map(tweet => (
                 <div className="tweet pb-3 mb-3" key={tweet.id} id={tweet.id}>
                   <div className="author mb-2">
-                    <a href={`/users/${tweet.username}`}>@{tweet.username}</a>
+                    <a href={`/users/${tweet.username}`} className="user">@{tweet.username}</a>
                   </div>
                   <div className="message mb-2">
                     <div>{tweet.message}</div>
