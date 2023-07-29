@@ -136,7 +136,7 @@ class Home extends React.Component {
                     <div>{tweet.message}</div>
                   </div>
                   {tweet.username === username &&
-                  <div className="delete mb-2 justified-right">
+                  <div className="delete mb-2 d-flex justify-content-end">
                     <button className="btn btn-danger btn-sm rounded-pill" onClick={this.deleteTweet}>Delete</button>
                   </div>}
                 </div>
